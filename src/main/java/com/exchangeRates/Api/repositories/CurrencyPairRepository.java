@@ -10,14 +10,14 @@ import java.util.List;
 
 public interface CurrencyPairRepository extends JpaRepository<CurrencyPair,Long> {
 
-    @Query("SELECT cp FROM currency_pair cp WHERE cp.firstCurrency = :firstCurrency and cp.secondCurrency=:secondCurrency order by cp.date")
+    @Query("SELECT cp FROM currency_pair cp WHERE cp.firstCurrency = UPPER(:firstCurrency) and cp.secondCurrency=UPPER(:secondCurrency) order by cp.date")
     List<CurrencyPair> getCurrencyPairsByNames(@Param("firstCurrency") String firstCurrency,
                                                @Param("secondCurrency")String secondCurrency);
 
     @Query("SELECT cp FROM currency_pair cp WHERE cp.date = :date order by cp.date")
     List<CurrencyPair> getCurrencyPairsByDate(@Param("date") LocalDate date);
 
-    @Query("SELECT cp FROM currency_pair cp WHERE cp.date = :date and cp.firstCurrency = :firstCurrency and cp.secondCurrency = :secondCurrency order by cp.date")
+    @Query("SELECT cp FROM currency_pair cp WHERE cp.date = :date and cp.firstCurrency = UPPER(:firstCurrency) and cp.secondCurrency = UPPER(:secondCurrency) order by cp.date")
     List<CurrencyPair> getCurrencyPairByDateAndName(@Param("date")LocalDate date,
                                                     @Param("firstCurrency")String firstCurrency,
                                                     @Param("secondCurrency")String secondCurrency);
